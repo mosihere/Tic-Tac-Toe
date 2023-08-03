@@ -3,41 +3,71 @@ import sys
 import time
 from getpass import getpass
 from tools.bl import register_bl
-from tools.dal import save_records, register
+from tools.dal import save_records, register, signin
+
 
 
 
 print('If you want to Register, re-run program like this:\npython main.py register')
+print()
 print('If you want to Login, re-run program like this:\npython main.py login')
+print()
+
 
 name = None
 
 if sys.argv:
-    if sys.argv[1] == 'register':
-        name = input('Your Name: ')
-        password = getpass('Your Password: ')
-        confirm_password = getpass('Confirm Password: ')
+    match sys.argv[1]:
+        case 'register':
+            name = input('Your Name: ')
+            password = getpass('Your Password: ')
+            confirm_password = getpass('Confirm Password: ')
 
-        result = register_bl(
-            name=name,
-            password=password,
-            confirm_password=confirm_password
-            )
-        
-        if result == 'SUCCESS':
-            register(
+            result = register_bl(
                 name=name,
-                password=password
+                password=password,
+                confirm_password=confirm_password
                 )
             
-            os.system('clear')
+            if result == 'SUCCESS':
+                register(
+                    name=name,
+                    password=password
+                    )
+                
+                os.system('clear')
 
-            print(f'Registered as {name} successfully.')
+                print(f'Registered as {name} successfully.')
+                print()
 
-        else:
-            os.system('clear')
-            print(f'Registered Failed Because:\n{result[1]}')
-    
+            else:
+                os.system('clear')
+                print(f'Registered Failed Because:\n{result[1]}')
+                print()
+
+        case 'signin':
+            name = input('Enter Your Username: ')
+            password = getpass('Your Password: ')
+
+            signin_state = signin(username_= name, password_=password)
+
+            if signin_state[1] == 'SUCCESS':
+                os.system('clear')
+                print(f'Logged in Successfully.\nWelcome {name}.')
+                print()
+
+            elif signin_state[1] == 'FAILED':
+                print('- Login Failed\nThere Is not User with this Informations!')
+                name = None
+                print()
+
+            else:
+                os.system('clear')
+                print(signin_state[1])
+                name = None
+                print()
+
+
 
 def new_board() -> (list, str, float):
 
@@ -170,7 +200,7 @@ if __name__ == "__main__":
                 save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
                 exit()
 
-        player_choice = input('choose a number between 1-9\n')
+        player_choice = input('choose a number between 1-9: ')
 
         if turn % 2 == 0:
             player = 'o'
