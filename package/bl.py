@@ -13,3 +13,12 @@ def register_bl(name: str, password: str, confirm_password: str) -> bool:
     
     else:
         return 'ERROR', "\n".join(err_list)
+    
+
+def validate_spot(spot):
+
+    assert isinstance(spot, str), 'Only Integer Acceptable!'
+    try:
+        return int(spot) in range(1,10)
+    except:
+        return 'Only Integers Are Acceptable!'
