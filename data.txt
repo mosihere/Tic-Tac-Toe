@@ -52,3 +52,6 @@ o wins in 19 seconds
 x wins in 11 seconds
 x wins in 21 seconds
 x wins in 9 seconds
+x wins in 31 seconds
+x wins in 6 seconds
+x wins in 14 seconds

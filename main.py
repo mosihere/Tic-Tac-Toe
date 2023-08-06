@@ -1,4 +1,5 @@
 import os
+from os import name as osname
 import sys
 import time
 from getpass import getpass
@@ -6,6 +7,12 @@ from package.bl import register_bl, validate_spot
 from package.dal import save_records, register, signin
 
 
+
+
+if osname == 'posix':
+    clear_command = 'clear'
+else:
+    clear_command = 'cls'
 
 
 print('If you want to Register, re-run program like this:\npython main.py register')
@@ -35,13 +42,13 @@ if sys.argv[1:]:
                     password=password
                     )
                 
-                os.system('clear')
+                os.system(clear_command)
 
                 print(f'Registered as {name} successfully.')
                 print()
 
             else:
-                os.system('clear')
+                os.system(clear_command)
                 print(f'Registered Failed Because:\n{result[1]}')
                 print()
 
@@ -52,7 +59,7 @@ if sys.argv[1:]:
             signin_state = signin(username_=name, password_=password)
 
             if signin_state[1] == 'SUCCESS':
-                os.system('clear')
+                os.system(clear_command)
                 print(f'Logged in Successfully.\nWelcome {name}.')
                 print()
 
@@ -62,13 +69,13 @@ if sys.argv[1:]:
                 print()
 
             else:
-                os.system('clear')
+                os.system(clear_command)
                 print(signin_state[1])
                 name = None
                 print()
         
         case _:
-            os.system('clear')
+            os.system(clear_command)
             print('That is not a valid argument!\nArgument Must be\n+ register\n+ login')
             print()
 
@@ -152,7 +159,7 @@ def update_board(board, board_house: dict = None, player: str = None, move: str 
             board.pop(board_house[move])
             board.insert(board_house[move], player)
             board_house[move] = player
-            os.system('clear')
+            os.system(clear_command)
             board = ''.join(board)
             return f'{board}\n'
         
@@ -160,13 +167,13 @@ def update_board(board, board_house: dict = None, player: str = None, move: str 
         elif validate_spot(move) and board_house[move] in ['x', 'y']:
 
             while True:
-                os.system('clear')
+                os.system(clear_command)
                 print(''.join(board))
                 new_choice = input('This spot is already filled!\nChoose another one: ')
 
                 if validate_spot(new_choice):
                     try:
-                        os.system('clear')
+                        os.system(clear_command)
                         board.pop(board_house[new_choice])
                         board.insert(board_house[new_choice], player)
                         board_house[new_choice] = player
@@ -179,7 +186,7 @@ def update_board(board, board_house: dict = None, player: str = None, move: str 
                         pass
      
         else:
-            os.system('clear')
+            os.system(clear_command)
             print(''.join(board))
             move = input('- Enter a valid number between 1-9\nYour Choice: ')
 
