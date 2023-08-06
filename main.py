@@ -2,8 +2,8 @@ import os
 import sys
 import time
 from getpass import getpass
-from tools.bl import register_bl
-from tools.dal import save_records, register, signin
+from package.bl import register_bl, validate_spot
+from package.dal import save_records, register, signin
 
 
 
@@ -16,7 +16,7 @@ print()
 
 name = None
 
-if sys.argv:
+if sys.argv[1:]:
     match sys.argv[1]:
         case 'register':
             name = input('Your Name: ')
@@ -45,11 +45,11 @@ if sys.argv:
                 print(f'Registered Failed Because:\n{result[1]}')
                 print()
 
-        case 'signin':
+        case 'login':
             name = input('Enter Your Username: ')
             password = getpass('Your Password: ')
 
-            signin_state = signin(username_= name, password_=password)
+            signin_state = signin(username_=name, password_=password)
 
             if signin_state[1] == 'SUCCESS':
                 os.system('clear')
@@ -66,7 +66,11 @@ if sys.argv:
                 print(signin_state[1])
                 name = None
                 print()
-
+        
+        case _:
+            os.system('clear')
+            print('That is not a valid argument!\nArgument Must be\n+ register\n+ login')
+            print()
 
 
 def new_board() -> (list, str, float):
@@ -136,40 +140,53 @@ def check_for_winner(board_house: dict) -> bool:
 
     elif board_house['3'] == 'o' and board_house['5'] == 'o' and board_house['7'] == 'o':
         return True
-
-
+    
     return False
+
 
 def update_board(board, board_house: dict = None, player: str = None, move: str = None):
 
-        if board_house[move] in range(17):
+    while True:
+        
+        if validate_spot(move) and board_house[move] in range(17):
             board.pop(board_house[move])
             board.insert(board_house[move], player)
             board_house[move] = player
             os.system('clear')
             board = ''.join(board)
             return f'{board}\n'
-    
-        else:
+        
+
+        elif validate_spot(move) and board_house[move] in ['x', 'y']:
+
             while True:
                 os.system('clear')
                 print(''.join(board))
                 new_choice = input('This spot is already filled!\nChoose another one: ')
 
-                if board_house[new_choice] in range(17):
-                    os.system('clear')
-                    board.pop(board_house[new_choice])
-                    board.insert(board_house[new_choice], player)
-                    board_house[new_choice] = player
+                if validate_spot(new_choice):
+                    try:
+                        os.system('clear')
+                        board.pop(board_house[new_choice])
+                        board.insert(board_house[new_choice], player)
+                        board_house[new_choice] = player
 
-                    board = ''.join(board)
+                        board = ''.join(board)
+                        
+                        return f'{board}\n'
                     
-                    return f'{board}\n'
+                    except:
+                        pass
+     
+        else:
+            os.system('clear')
+            print(''.join(board))
+            move = input('- Enter a valid number between 1-9\nYour Choice: ')
 
         
 if __name__ == "__main__":
 
-    for turn in range(1, 10):
+    for turn in range(1, 11):
 
         if turn == 1:
 
@@ -195,19 +212,22 @@ if __name__ == "__main__":
             if name:
                 save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
                 exit()
-            
+
             else:
                 save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
                 exit()
 
-        player_choice = input('choose a number between 1-9: ')
-
-        if turn % 2 == 0:
-            player = 'o'
-
+        elif turn == 10 and not check_for_winner(board_house):
+            print('Draw')
+            exit()
+        
         else:
-            player = 'x'
+            player_choice = input('choose a number between 1-9: ')
 
-        print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
+            if turn % 2 == 0:
+                player = 'o'
 
-
+            else:
+                player = 'x'
+                
+            print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
