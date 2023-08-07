@@ -1,3 +1,9 @@
+from tabulate import tabulate
+
+
+
+
+
 def save_records(player: str, game_duration: int, name: str = None) -> None:
 
     with open('data.txt', 'a') as file:
@@ -38,5 +44,39 @@ def signin(username_, password_):
 
             return False, 'FAILED'
         
+    except IOError as err:
+        return err, 'We Encounter A problem during handling file.' 
+    
+
+def leaderbord():
+
+    data = list()
+
+    try:
+        with open('data.txt', 'r') as file:
+
+            for line in file:
+
+                info = line.strip().split()
+                player_name = info[0]
+
+                if len(player_name) < 2:
+                    continue
+
+                else:
+                    player_info = list()
+                    player_info.append(player_name)
+
+                game_duration = int(info[-2])
+                player_info.append(game_duration)
+
+                data.append(player_info)
+                
+            data.sort(key=lambda x:x[1])
+            data.insert(0, ['Player', 'Game Duration(Seconds)'])
+            table = tabulate(data, headers='firstrow', tablefmt='psql')
+            
+            return table
+
     except IOError as err:
         return err, 'We Encounter A problem during handling file.' 
