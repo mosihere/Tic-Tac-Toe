@@ -4,8 +4,7 @@ import sys
 import time
 from getpass import getpass
 from package.bl import register_bl, validate_spot
-from package.dal import save_records, register, signin
-
+from package.dal import save_records, register, signin, leaderbord
 
 
 
@@ -19,12 +18,23 @@ print('If you want to Register, re-run program like this:\npython main.py regist
 print()
 print('If you want to Login, re-run program like this:\npython main.py login')
 print()
+print('If you want to Check Leaderbord, re-run program like this:\npython main.py leaderbord')
+print()
+
+
 
 
 name = None
 
 if sys.argv[1:]:
+
     match sys.argv[1]:
+        
+        case 'leaderbord':
+            print(leaderbord())
+            print()
+            print()
+            
         case 'register':
             name = input('Your Name: ')
             password = getpass('Your Password: ')
