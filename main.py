@@ -4,7 +4,7 @@ import time
 from getpass import getpass
 from os import name as osname
 from package.bl import register_bl, validate_spot, check_for_winner
-from package.dal import save_records, register, signin, leaderbord
+from package.dal import save_records, register, signin, leaderboard
 
 
 
@@ -30,10 +30,21 @@ if sys.argv[1:]:
 
     match sys.argv[1]:
         
-        case 'leaderbord':
-            print(leaderbord())
-            print()
-            print()
+        case 'leaderboard':
+
+            while True:
+                print(leaderboard())
+                print()
+                print()
+
+                ask_for_playing = input('Wanna Play Now?\nYes or No: ').lower()
+                if ask_for_playing == 'no' or ask_for_playing == 'n':
+                    exit()
+
+                else:
+                    os.system(clear_command)
+                    break
+
             
         case 'register':
             while True:
