@@ -4,7 +4,7 @@ from tabulate import tabulate
 
 
 
-def save_records(player: str, game_duration: int, name: str = None) -> None:
+def save_records(player: str, game_duration: int, name: str = None) -> str:
 
     with open('data.txt', 'a') as file:
 
@@ -27,7 +27,7 @@ def register(name: str, password: str):
 
 def signin(username_, password_):
 
-    assert username_.isalpha()
+    assert username_.isascii(), 'Username Must Contains ASCII Only!'
 
     try:
         with open('users.txt', 'r') as file:
