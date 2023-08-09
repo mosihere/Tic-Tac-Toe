@@ -1,9 +1,9 @@
 import os
-from os import name as osname
 import sys
 import time
 from getpass import getpass
-from package.bl import register_bl, validate_spot
+from os import name as osname
+from package.bl import register_bl, validate_spot, check_for_winner
 from package.dal import save_records, register, signin, leaderbord
 
 
@@ -36,53 +36,73 @@ if sys.argv[1:]:
             print()
             
         case 'register':
-            name = input('Your Name: ')
-            password = getpass('Your Password: ')
-            confirm_password = getpass('Confirm Password: ')
+            while True:
+                name = input('Your Name: ')
+                password = getpass('Your Password: ')
+                confirm_password = getpass('Confirm Password: ')
 
-            result = register_bl(
-                name=name,
-                password=password,
-                confirm_password=confirm_password
-                )
-            
-            if result == 'SUCCESS':
-                register(
+                result = register_bl(
                     name=name,
-                    password=password
+                    password=password,
+                    confirm_password=confirm_password
                     )
                 
-                os.system(clear_command)
+                if result == 'SUCCESS':
+                    register(
+                        name=name,
+                        password=password
+                        )
+                    
+                    os.system(clear_command)
 
-                print(f'Registered as {name} successfully.')
-                print()
+                    print(f'Registered as {name} successfully.')
+                    print()
+                    break
 
-            else:
-                os.system(clear_command)
-                print(f'Registered Failed Because:\n{result[1]}')
-                print()
+                else:
+                    os.system(clear_command)
+                    print(f'Registered Failed\n{result[1]}\n')
+
+                    try_again = input('Wanna Try again ?\nYes or No: ').lower()
+                    os.system(clear_command)
+
+                    if try_again == 'no' or try_again == 'n':
+                        print('You Did not Register\n')
+                        break
+                    print()
 
         case 'login':
-            name = input('Enter Your Username: ')
-            password = getpass('Your Password: ')
+            
+            while True:
+                name = input('Enter Your Username: ')
+                password = getpass('Your Password: ')
 
-            signin_state = signin(username_=name, password_=password)
+                signin_state = signin(username_=name, password_=password)
 
-            if signin_state[1] == 'SUCCESS':
-                os.system(clear_command)
-                print(f'Logged in Successfully.\nWelcome {name}.')
-                print()
+                if signin_state[1] == 'SUCCESS':
+                    os.system(clear_command)
+                    print(f'Logged in Successfully.\nWelcome {name}.')
+                    print()
+                    break
 
-            elif signin_state[1] == 'FAILED':
-                print('- Login Failed\nThere Is not User with this Informations!')
-                name = None
-                print()
+                elif signin_state[1] == 'FAILED':
+                    os.system(clear_command)
+                    print('Login Failed\n- There Is not User with this Informations!\n')
+                    name = None
 
-            else:
-                os.system(clear_command)
-                print(signin_state[1])
-                name = None
-                print()
+                    try_again = input('Wanna Try again ?\nYes or No: ').lower()
+                    os.system(clear_command)
+
+                    if try_again == 'no' or try_again == 'n':
+                        print('You Did not Login\n')
+                        break
+                    print()
+
+                else:
+                    os.system(clear_command)
+                    print(signin_state[1])
+                    name = None
+                    print()
         
         case _:
             os.system(clear_command)
@@ -106,59 +126,6 @@ def new_board() -> (list, str, float):
     start_time = time.time()
 
     return board, ''.join(board), start_time
-
-
-def check_for_winner(board_house: dict) -> bool:
-
-    if board_house['1'] == 'x' and board_house['2'] == 'x' and board_house['3'] == 'x':
-        return True
-
-    elif board_house['1'] == 'o' and board_house['2'] == 'o' and board_house['3'] == 'o':
-        return True
-
-    elif board_house['4'] == 'x' and board_house['5'] == 'x' and board_house['6'] == 'x':
-        return True
-
-    elif board_house['4'] == 'o' and board_house['5'] == 'o' and board_house['6'] == 'o':
-        return True
-    
-    elif board_house['7'] == 'x' and board_house['8'] == 'x' and board_house['9'] == 'x':
-        return True
-
-    elif board_house['7'] == 'o' and board_house['8'] == 'o' and board_house['9'] == 'o':
-        return True
-
-    elif board_house['1'] == 'x' and board_house['4'] == 'x' and board_house['7'] == 'x':
-        return True
-
-    elif board_house['1'] == 'o' and board_house['4'] == 'o' and board_house['7'] == 'o':
-        return True
-
-    elif board_house['1'] == 'x' and board_house['5'] == 'x' and board_house['9'] == 'x':
-        return True
-
-    elif board_house['1'] == 'o' and board_house['5'] == 'o' and board_house['9'] == 'o':
-        return True
-
-    elif board_house['2'] == 'x' and board_house['5'] == 'x' and board_house['8'] == 'x':
-        return True
-
-    elif board_house['2'] == 'o' and board_house['5'] == 'o' and board_house['8'] == 'o':
-        return True
-
-    elif board_house['3'] == 'x' and board_house['6'] == 'x' and board_house['9'] == 'x':
-        return True
-
-    elif board_house['3'] == 'o' and board_house['6'] == 'o' and board_house['9'] == 'o':
-        return True
-
-    elif board_house['3'] == 'x' and board_house['5'] == 'x' and board_house['7'] == 'x':
-        return True
-
-    elif board_house['3'] == 'o' and board_house['5'] == 'o' and board_house['7'] == 'o':
-        return True
-    
-    return False
 
 
 def update_board(board, board_house: dict = None, player: str = None, move: str = None):
@@ -201,6 +168,8 @@ def update_board(board, board_house: dict = None, player: str = None, move: str 
             move = input('- Enter a valid number between 1-9\nYour Choice: ')
 
         
+
+
 if __name__ == "__main__":
 
     for turn in range(1, 11):
@@ -225,12 +194,13 @@ if __name__ == "__main__":
 
         if check_for_winner(board_house):
             game_time = int(time.time() - start_time)
-            print(f'++  {"x" if turn % 2 == 0 else "o"} wins in {game_time} seconds!  ++')
             if name:
+                print(f'++ {name} wins as {"x" if turn % 2 == 0 else "o"} in {game_time} seconds!  ++')
                 save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
                 exit()
 
             else:
+                print(f'++ {"x" if turn % 2 == 0 else "o"} wins in {game_time} seconds!  ++')
                 save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
                 exit()
 
