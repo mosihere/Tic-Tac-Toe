@@ -48,7 +48,7 @@ def signin(username_, password_):
         return err, 'We Encounter A problem during handling file.' 
     
 
-def leaderbord():
+def leaderboard():
 
     data = list()
 
