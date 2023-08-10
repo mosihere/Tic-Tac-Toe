@@ -14,11 +14,11 @@ else:
     clear_command = 'cls'
 
 
-print('If you want to Register, re-run program like this:\npython main.py register')
+print('- Register:\npython main.py register')
 print()
-print('If you want to Login, re-run program like this:\npython main.py login')
+print('- Sign-in:\npython main.py login')
 print()
-print('If you want to Check Leaderbord, re-run program like this:\npython main.py leaderbord')
+print('- Check Leader Board:\npython main.py leaderbord')
 print()
 
 
@@ -117,7 +117,7 @@ if sys.argv[1:]:
         
         case _:
             os.system(clear_command)
-            print('That is not a valid argument!\nArgument Must be\n+ register\n+ login')
+            print('That is not a valid argument!\nArgument Must be\n+ register\n+ login\n+ leaderboard')
             print()
 
 
