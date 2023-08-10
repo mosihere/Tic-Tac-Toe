@@ -1,6 +1,6 @@
 ## Command Line Tic Tac Toe
 
-Just for Warmup and giving Idea how to make a simple game for cli.
+Just for Warmup and giving some Idea how to make a simple game for cli.
 
 ### Features:
 
@@ -11,7 +11,7 @@ Just for Warmup and giving Idea how to make a simple game for cli.
 
 ### How To Run This Program
 
-You Run This Script With or Without argument.
+You can Run This Script With or Without argument.
 
 - Without Arg:
   
