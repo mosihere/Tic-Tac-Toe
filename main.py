@@ -143,7 +143,7 @@ def update_board(board, board_house: dict = None, player: str = None, move: str 
 
     while True:
         
-        if validate_spot(move) and board_house[move] in range(17):
+        if validate_spot(move) == True and board_house[move] in range(17):
             board.pop(board_house[move])
             board.insert(board_house[move], player)
             board_house[move] = player
@@ -152,30 +152,28 @@ def update_board(board, board_house: dict = None, player: str = None, move: str 
             return f'{board}\n'
         
 
-        elif validate_spot(move) and board_house[move] in ['x', 'y']:
+        elif validate_spot(move) == True and board_house[move] in ['x', 'o']:
 
-            while True:
+            os.system(clear_command)
+            print(''.join(board))
+            print()
+            move = input('- This spot is already filled!\nChoose another one: ')
+
+            if validate_spot(move):
                 os.system(clear_command)
-                print(''.join(board))
-                new_choice = input('This spot is already filled!\nChoose another one: ')
+                board.pop(board_house[move])
+                board.insert(board_house[move], player)
+                board_house[move] = player
 
-                if validate_spot(new_choice):
-                    try:
-                        os.system(clear_command)
-                        board.pop(board_house[new_choice])
-                        board.insert(board_house[new_choice], player)
-                        board_house[new_choice] = player
-
-                        board = ''.join(board)
-                        
-                        return f'{board}\n'
-                    
-                    except:
-                        pass
+                board = ''.join(board)
+                
+                return f'{board}\n'
+                
      
         else:
             os.system(clear_command)
             print(''.join(board))
+            print()
             move = input('- Enter a valid number between 1-9\nYour Choice: ')
 
         
@@ -220,12 +218,17 @@ if __name__ == "__main__":
             exit()
         
         else:
-            player_choice = input('choose a number between 1-9: ')
 
             if turn % 2 == 0:
                 player = 'o'
 
             else:
                 player = 'x'
+
+            print()
+            
+            if turn == 1:
+                print('Choose Numbers Between 1-9')
+            player_choice = input(f'{player.capitalize()} Turn: ')
                 
             print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
