@@ -181,54 +181,68 @@ def update_board(board, board_house: dict = None, player: str = None, move: str 
 
 if __name__ == "__main__":
 
-    for turn in range(1, 11):
+    while True:
 
-        if turn == 1:
+        for turn in range(1, 11):
 
-            board_house = {
-            '1': 0,
-            '2': 2,
-            '3': 4,
-            '4': 6,
-            '5': 8,
-            '6': 10,
-            '7': 12,
-            '8': 14,
-            '9': 16
-        }
-            
-            empty_board = new_board()
-            start_time = empty_board[2]
-            print(empty_board[1])
-
-        if check_for_winner(board_house):
-            game_time = int(time.time() - start_time)
-            if name:
-                print(f'++ {name} wins as {"x" if turn % 2 == 0 else "o"} in {game_time} seconds!  ++')
-                save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
-                exit()
-
-            else:
-                print(f'++ {"x" if turn % 2 == 0 else "o"} wins in {game_time} seconds!  ++')
-                save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
-                exit()
-
-        elif turn == 10 and not check_for_winner(board_house):
-            print('Draw')
-            exit()
-        
-        else:
-
-            if turn % 2 == 0:
-                player = 'o'
-
-            else:
-                player = 'x'
-
-            print()
-            
             if turn == 1:
-                print('Choose Numbers Between 1-9')
-            player_choice = input(f'{player.capitalize()} Turn: ')
+
+                board_house = {
+                '1': 0,
+                '2': 2,
+                '3': 4,
+                '4': 6,
+                '5': 8,
+                '6': 10,
+                '7': 12,
+                '8': 14,
+                '9': 16
+            }
                 
-            print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
+                empty_board = new_board()
+                start_time = empty_board[2]
+                print(empty_board[1])
+
+            if check_for_winner(board_house):
+                game_time = int(time.time() - start_time)
+                if name:
+                    print(f'++ {name} wins as {"x" if turn % 2 == 0 else "o"} in {game_time} seconds!  ++')
+                    print()
+                    save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
+                    break
+
+                else:
+                    print(f'++ {"x" if turn % 2 == 0 else "o"} wins in {game_time} seconds!  ++')
+                    save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
+                    print()
+                    break
+
+            elif turn == 10 and not check_for_winner(board_house):
+                print('Draw\nMaybe rematch and Do your best Next time :)')
+                print()
+                break
+            
+            else:
+
+                if turn % 2 == 0:
+                    player = 'o'
+
+                else:
+                    player = 'x'
+
+                print()
+                
+                if turn == 1:
+                    print('Choose Numbers Between 1-9')
+                player_choice = input(f'{player.capitalize()} Turn: ')
+                    
+                print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
+
+        re_match = input('Want To Rematch ?\n- Yes(y) / No(n): ').lower()
+        
+        if re_match == 'no' or re_match =='n':
+            os.system(clear_command)
+            print('Good bye :)')
+            break
+
+        os.system(clear_command)
