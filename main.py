@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+import random
 from getpass import getpass
 from os import name as osname
 from package.bl import register_bl, validate_spot, check_for_winner
@@ -139,7 +140,32 @@ def new_board() -> (list, str, float):
     return board, ''.join(board), start_time
 
 
-def update_board(board, board_house: dict = None, player: str = None, move: str = None):
+def bot_move(board: list, board_house: dict):
+    
+    if board_house['5'] not in ['x', 'o']:
+        board.pop(board_house['5'])
+        board.insert(board_house['5'], 'o')
+        board_house['5'] = 'o'
+        time.sleep(1)
+        os.system(clear_command)
+
+        return ''.join(board)
+    
+    else:
+        while True:
+            random_spot = str(random.randint(1,9))
+
+            if board_house[random_spot] not in ['x', 'o']:
+                board.pop(board_house[random_spot])
+                board.insert(board_house[random_spot], 'o')
+                board_house[random_spot] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+
+def update_board(board: list, board_house: dict = None, player: str = None, move: str = None):
 
     while True:
         
@@ -159,7 +185,7 @@ def update_board(board, board_house: dict = None, player: str = None, move: str 
             print()
             move = input('- This spot is already filled!\nChoose another one: ')
 
-            if validate_spot(move):
+            if validate_spot(move) and board_house[move] not in ['x', 'o']:
                 os.system(clear_command)
                 board.pop(board_house[move])
                 board.insert(board_house[move], player)
@@ -205,11 +231,19 @@ if __name__ == "__main__":
 
             if check_for_winner(board_house):
                 game_time = int(time.time() - start_time)
-                if name:
-                    print(f'++ {name} wins as {"x" if turn % 2 == 0 else "o"} in {game_time} seconds!  ++')
+
+                if name and player == 'x':
+                    print(f'++ {name} wins as "x" in {game_time} seconds!  ++')
                     print()
-                    save_records(player=f'{"x" if turn % 2 == 0 else "o"}', game_duration=game_time, name=name)
+                    save_records(player='x', game_duration=game_time, name=name)
                     break
+
+                elif name and player == 'o':
+                    print('- You Lose!')
+                    print()
+                    save_records(player='o', game_duration=game_time)
+                    break
+
 
                 else:
                     print(f'++ {"x" if turn % 2 == 0 else "o"} wins in {game_time} seconds!  ++')
@@ -234,9 +268,14 @@ if __name__ == "__main__":
                 
                 if turn == 1:
                     print('Choose Numbers Between 1-9')
-                player_choice = input(f'{player.capitalize()} Turn: ')
+
                     
-                print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
+                if player == 'x':
+                    player_choice = input(f'{player.capitalize()} Turn: ')
+                    print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
+
+                else:
+                    print(bot_move(board=empty_board[0], board_house=board_house))
 
         re_match = input('Want To Rematch ?\n- Yes(y) / No(n): ').lower()
         
