@@ -7,7 +7,7 @@ Just for Warmup and giving some Idea how to make a simple game for cli.
 - Players Can Register
 - Players Can Log-in
 - Players Can Also Check LeaderBoard (Game Time Calculated).
-- Bot Play vs Human
+- Bot Plays vs Human
 - Game mode --> Normal and Pro
 
 
