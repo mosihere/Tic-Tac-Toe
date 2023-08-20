@@ -140,19 +140,364 @@ def new_board() -> (list, str, float):
     return board, ''.join(board), start_time
 
 
-def bot_move(board: list, board_house: dict):
-    
-    if board_house['5'] not in ['x', 'o']:
-        board.pop(board_house['5'])
-        board.insert(board_house['5'], 'o')
-        board_house['5'] = 'o'
-        time.sleep(1)
-        os.system(clear_command)
+def bot_move(board: list, board_house: dict, pro_mode: bool = False):
 
-        return ''.join(board)
-    
-    else:
-        while True:
+    while True:
+        
+        if pro_mode:
+
+        # If computer can Win
+
+            if board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)      
+
+            elif board_house['1'] == 'o' and board_house['2'] == 'o' and board_house['3'] not in ['x', 'o']:
+                board.pop(board_house['3'])
+                board.insert(board_house['3'], 'o')
+                board_house['3'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['1'] == 'o' and board_house['3'] == 'o' and board_house['2'] not in ['x', 'o']:
+                board.pop(board_house['2'])
+                board.insert(board_house['2'], 'o')
+                board_house['2'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['1'] == 'o' and board_house['4'] == 'o' and board_house['7'] not in ['x', 'o']:
+                board.pop(board_house['7'])
+                board.insert(board_house['7'], 'o')
+                board_house['7'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['1'] == 'o' and board_house['7'] == 'o' and board_house['4'] not in ['x', 'o']:
+                board.pop(board_house['4'])
+                board.insert(board_house['4'], 'o')
+                board_house['4'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['1'] == 'o' and board_house['5'] == 'o' and board_house['9'] not in ['x', 'o']:
+                board.pop(board_house['9'])
+                board.insert(board_house['9'], 'o')
+                board_house['9'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['1'] == 'o' and board_house['9'] == 'o' and board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['2'] == 'o' and board_house['3'] == 'o' and board_house['4'] not in ['x', 'o']:
+                board.pop(board_house['4'])
+                board.insert(board_house['4'], 'o')
+                board_house['4'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['2'] == 'o' and board_house['4'] == 'o' and board_house['3'] not in ['x', 'o']:
+                board.pop(board_house['3'])
+                board.insert(board_house['3'], 'o')
+                board_house['3'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['2'] == 'o' and board_house['5'] == 'o' and board_house['8'] not in ['x', 'o']:
+                board.pop(board_house['8'])
+                board.insert(board_house['8'], 'o')
+                board_house['8'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['2'] == 'o' and board_house['8'] == 'o' and board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['3'] == 'o' and board_house['6'] == 'o' and board_house['9'] not in ['x', 'o']:
+                board.pop(board_house['9'])
+                board.insert(board_house['9'], 'o')
+                board_house['9'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['3'] == 'o' and board_house['9'] == 'o' and board_house['6'] not in ['x', 'o']:
+                board.pop(board_house['6'])
+                board.insert(board_house['6'], 'o')
+                board_house['6'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['3'] == 'o' and board_house['5'] == 'o' and board_house['7'] not in ['x', 'o']:
+                board.pop(board_house['7'])
+                board.insert(board_house['7'], 'o')
+                board_house['7'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['3'] == 'o' and board_house['7'] == 'o' and board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['4'] == 'o' and board_house['5'] == 'o' and board_house['6'] not in ['x', 'o']:
+                board.pop(board_house['6'])
+                board.insert(board_house['6'], 'o')
+                board_house['6'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['4'] == 'o' and board_house['6'] == 'o' and board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['7'] == 'o' and board_house['8'] == 'o' and board_house['9'] not in ['x', 'o']:
+                board.pop(board_house['9'])
+                board.insert(board_house['9'], 'o')
+                board_house['9'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['7'] == 'o' and board_house['9'] == 'o' and board_house['8'] not in ['x', 'o']:
+                board.pop(board_house['8'])
+                board.insert(board_house['8'], 'o')
+                board_house['8'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+
+            # If Player Could win, Computer Will Ruin That.
+
+            elif board_house['1'] == 'x' and board_house['2'] == 'x' and board_house['3'] not in ['x', 'o']:
+                board.pop(board_house['3'])
+                board.insert(board_house['3'], 'o')
+                board_house['3'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['1'] == 'x' and board_house['3'] == 'x' and board_house['2'] not in ['x', 'o']:
+                board.pop(board_house['2'])
+                board.insert(board_house['2'], 'o')
+                board_house['2'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['1'] == 'x' and board_house['4'] == 'x' and board_house['7'] not in ['x', 'o']:
+                board.pop(board_house['7'])
+                board.insert(board_house['7'], 'o')
+                board_house['7'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['1'] == 'x' and board_house['7'] == 'x' and board_house['4'] not in ['x', 'o']:
+                board.pop(board_house['4'])
+                board.insert(board_house['4'], 'o')
+                board_house['4'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['1'] == 'x' and board_house['5'] == 'x' and board_house['9'] not in ['x', 'o']:
+                board.pop(board_house['9'])
+                board.insert(board_house['9'], 'o')
+                board_house['9'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['1'] == 'x' and board_house['9'] == 'x' and board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['2'] == 'x' and board_house['3'] == 'x' and board_house['4'] not in ['x', 'o']:
+                board.pop(board_house['4'])
+                board.insert(board_house['4'], 'o')
+                board_house['4'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['2'] == 'x' and board_house['4'] == 'x' and board_house['3'] not in ['x', 'o']:
+                board.pop(board_house['3'])
+                board.insert(board_house['3'], 'o')
+                board_house['3'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['2'] == 'x' and board_house['5'] == 'x' and board_house['8'] not in ['x', 'o']:
+                board.pop(board_house['8'])
+                board.insert(board_house['8'], 'o')
+                board_house['8'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['2'] == 'x' and board_house['8'] == 'x' and board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['3'] == 'x' and board_house['6'] == 'x' and board_house['9'] not in ['x', 'o']:
+                board.pop(board_house['9'])
+                board.insert(board_house['9'], 'o')
+                board_house['9'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['3'] == 'x' and board_house['9'] == 'x' and board_house['6'] not in ['x', 'o']:
+                board.pop(board_house['6'])
+                board.insert(board_house['6'], 'o')
+                board_house['6'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['3'] == 'x' and board_house['5'] == 'x' and board_house['7'] not in ['x', 'o']:
+                board.pop(board_house['7'])
+                board.insert(board_house['7'], 'o')
+                board_house['7'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['3'] == 'x' and board_house['7'] == 'x' and board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['4'] == 'x' and board_house['5'] == 'x' and board_house['6'] not in ['x', 'o']:
+                board.pop(board_house['6'])
+                board.insert(board_house['6'], 'o')
+                board_house['6'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['4'] == 'x' and board_house['6'] == 'x' and board_house['5'] not in ['x', 'o']:
+                board.pop(board_house['5'])
+                board.insert(board_house['5'], 'o')
+                board_house['5'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['7'] == 'x' and board_house['8'] == 'x' and board_house['9'] not in ['x', 'o']:
+                board.pop(board_house['9'])
+                board.insert(board_house['9'], 'o')
+                board_house['9'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            elif board_house['7'] == 'x' and board_house['9'] == 'x' and board_house['8'] not in ['x', 'o']:
+                board.pop(board_house['8'])
+                board.insert(board_house['8'], 'o')
+                board_house['8'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
+            else:
+                random_spot = str(random.randint(1,9))
+
+                if board_house[random_spot] not in ['x', 'o']:
+                    board.pop(board_house[random_spot])
+                    board.insert(board_house[random_spot], 'o')
+                    board_house[random_spot] = 'o'
+                    time.sleep(1)
+                    os.system(clear_command)
+
+                    return ''.join(board)
+
+        # In case of Normal Mode
+        else:
             random_spot = str(random.randint(1,9))
 
             if board_house[random_spot] not in ['x', 'o']:
@@ -163,6 +508,9 @@ def bot_move(board: list, board_house: dict):
                 os.system(clear_command)
 
                 return ''.join(board)
+
+
+                    
 
 
 def update_board(board: list, board_house: dict = None, player: str = None, move: str = None):
@@ -206,8 +554,11 @@ def update_board(board: list, board_house: dict = None, player: str = None, move
 
 
 if __name__ == "__main__":
-
+    
     while True:
+
+        game_mode = input('- Select Game Mode\n1- Pro\n2- Normal\nYour Choice(1-2): ')
+        os.system(clear_command)
 
         for turn in range(1, 11):
 
@@ -275,7 +626,11 @@ if __name__ == "__main__":
                     print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
 
                 else:
-                    print(bot_move(board=empty_board[0], board_house=board_house))
+                    if game_mode == '1':
+                        print(bot_move(board=empty_board[0], board_house=board_house, pro_mode=True))
+                    else:
+                        print(bot_move(board=empty_board[0], board_house=board_house))
+
 
         re_match = input('Want To Rematch ?\n- Yes(y) / No(n): ').lower()
         
