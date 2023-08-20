@@ -175,6 +175,8 @@ def update_board(board: list, board_house: dict = None, player: str = None, move
             os.system(clear_command)
             print(''.join(board))
             print()
+            print(validate_spot(move))
+            print()
             move = input('- Enter a valid number between 1-9\nYour Choice: ')
 
         
@@ -184,7 +186,7 @@ if __name__ == "__main__":
     
     while True:
 
-        game_mode = input('- Select Game Mode\n1- Pro\n2- Normal\nYour Choice(1-2): ')
+        game_mode = input('- Select Game Mode\n1- Pro\n2- Normal\n\nYour Choice(1-2): ')
         os.system(clear_command)
 
         for turn in range(1, 11):
