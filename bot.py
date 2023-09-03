@@ -82,15 +82,6 @@ def bot_move(board: list, board_house: dict, pro_mode: bool = False):
 
                 return ''.join(board)
             
-            elif board_house['2'] == 'o' and board_house['3'] == 'o' and board_house['4'] not in ['x', 'o']:
-                board.pop(board_house['4'])
-                board.insert(board_house['4'], 'o')
-                board_house['4'] = 'o'
-                time.sleep(1)
-                os.system(clear_command)
-
-                return ''.join(board)
-
             elif board_house['2'] == 'o' and board_house['3'] == 'o' and board_house['1'] not in ['x', 'o']:
                 board.pop(board_house['1'])
                 board.insert(board_house['1'], 'o')
@@ -99,8 +90,8 @@ def bot_move(board: list, board_house: dict, pro_mode: bool = False):
                 os.system(clear_command)
 
                 return ''.join(board)
-            
-            elif board_house['2'] == 'o' and board_house['4'] == 'o' and board_house['3'] not in ['x', 'o']:
+
+            elif board_house['2'] == 'o' and board_house['1'] == 'o' and board_house['3'] not in ['x', 'o']:
                 board.pop(board_house['3'])
                 board.insert(board_house['3'], 'o')
                 board_house['3'] = 'o'
@@ -300,17 +291,8 @@ def bot_move(board: list, board_house: dict, pro_mode: bool = False):
                 os.system(clear_command)
 
                 return ''.join(board)
-            
-            elif board_house['2'] == 'x' and board_house['3'] == 'x' and board_house['4'] not in ['x', 'o']:
-                board.pop(board_house['4'])
-                board.insert(board_house['4'], 'o')
-                board_house['4'] = 'o'
-                time.sleep(1)
-                os.system(clear_command)
 
-                return ''.join(board)
-
-            elif board_house['2'] == 'x' and board_house['4'] == 'x' and board_house['3'] not in ['x', 'o']:
+            elif board_house['2'] == 'x' and board_house['1'] == 'x' and board_house['3'] not in ['x', 'o']:
                 board.pop(board_house['3'])
                 board.insert(board_house['3'], 'o')
                 board_house['3'] = 'o'
@@ -373,6 +355,15 @@ def bot_move(board: list, board_house: dict, pro_mode: bool = False):
 
                 return ''.join(board)
 
+            elif board_house['3'] == 'x' and board_house['2'] == 'x' and board_house['1'] not in ['x', 'o']:
+                board.pop(board_house['1'])
+                board.insert(board_house['1'], 'o')
+                board_house['1'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+                
             elif board_house['3'] == 'x' and board_house['7'] == 'x' and board_house['5'] not in ['x', 'o']:
                 board.pop(board_house['5'])
                 board.insert(board_house['5'], 'o')
