@@ -17,7 +17,7 @@ def bot_move(board: list, board_house: dict, pro_mode: bool = False):
         
         if pro_mode:
 
-        # If computer can Win
+        # If computer could Win
 
             if board_house['5'] not in ['x', 'o']:
                 board.pop(board_house['5'])
@@ -190,6 +190,15 @@ def bot_move(board: list, board_house: dict, pro_mode: bool = False):
 
                 return ''.join(board)
 
+            elif board_house['5'] == 'o' and board_house['8'] == 'o' and board_house['2'] not in ['x', 'o']:
+                board.pop(board_house['2'])
+                board.insert(board_house['2'], 'o')
+                board_house['2'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+            
             elif board_house['7'] == 'o' and board_house['8'] == 'o' and board_house['9'] not in ['x', 'o']:
                 board.pop(board_house['9'])
                 board.insert(board_house['9'], 'o')
@@ -404,6 +413,15 @@ def bot_move(board: list, board_house: dict, pro_mode: bool = False):
                 board.pop(board_house['3'])
                 board.insert(board_house['3'], 'o')
                 board_house['3'] = 'o'
+                time.sleep(1)
+                os.system(clear_command)
+
+                return ''.join(board)
+
+            elif board_house['5'] == 'x' and board_house['8'] == 'x' and board_house['2'] not in ['x', 'o']:
+                board.pop(board_house['2'])
+                board.insert(board_house['2'], 'o')
+                board_house['2'] = 'o'
                 time.sleep(1)
                 os.system(clear_command)
 
