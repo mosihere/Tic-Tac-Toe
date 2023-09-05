@@ -188,6 +188,8 @@ if __name__ == "__main__":
 
         game_mode = input('- Select Game Mode\n1- Pro\n2- Normal\n\nYour Choice(1-2): ')
         os.system(clear_command)
+        print(f'Game Mode Set as {"Pro!" if game_mode == "1" else "Normal!"}!\n')
+        time.sleep(1)
 
         for turn in range(1, 11):
 
