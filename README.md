@@ -1,6 +1,6 @@
 ## Command Line Tic Tac Toe
 
-Just for Warmup and giving some Idea how to make a simple game for cli.
+for giving some Idea how to make a simple game for cli step by step.
 
 ### Features:
 
