@@ -6,7 +6,7 @@ from getpass import getpass
 from os import name as osname
 from package.bl import register_bl, validate_spot, check_for_winner
 from package.dal import save_records, register, signin, leaderboard
-
+from typing import Tuple
 
 
 if osname == 'posix':
@@ -122,7 +122,7 @@ if sys.argv[1:]:
             print()
 
 
-def new_board() -> (list, str, float):
+def new_board() -> Tuple[list, str, float]:
 
     board = list()
 
