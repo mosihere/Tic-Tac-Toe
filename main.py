@@ -6,115 +6,135 @@ from getpass import getpass
 from os import name as osname
 from package.bl import register_bl, validate_spot, check_for_winner
 from package.dal import save_records, register, signin, leaderboard
+from typing import Tuple
 
 
+PLAYER_X = 'x'
+PLAYER_O = 'O'
 
 if osname == 'posix':
     clear_command = 'clear'
 else:
     clear_command = 'cls'
 
-
-print('- Register:\npython main.py register')
-print()
-print('- Sign-in:\npython main.py login')
-print()
-print('- Check Leader Board:\npython main.py leaderbord')
-print()
-
-
-
-
 name = None
+
+def display_menu():
+    print('- Register:\npython main.py register')
+    print()
+    print('- Sign-in:\npython main.py login')
+    print()
+    print('- Check Leader Board:\npython main.py leaderbord')
+    print()
+    return 
+
+
+def select_game_mode() -> int:
+    game_mode = input('- Select Game Mode\n1- Pro\n2- Normal\n\nYour Choice(1-2): ')
+    os.system(clear_command)
+    print(f'Game Mode Set as {"Pro!" if game_mode == "1" else "Normal!"}!\n')
+    time.sleep(1)
+    return game_mode
+
+
+def handle_register():
+    while True:
+        name = input('Your Name: ')
+        password = getpass('Your Password: ')
+        confirm_password = getpass('Confirm Password: ')
+
+        result = register_bl(
+            name=name,
+            password=password,
+            confirm_password=confirm_password
+            )
+        
+        if result == 'SUCCESS':
+            register(
+                name=name,
+                password=password
+                )
+            
+            os.system(clear_command)
+
+            print(f'Registered as {name} successfully.')
+            print()
+            return name
+
+        else:
+            os.system(clear_command)
+            print(f'Registered Failed\n{result[1]}\n')
+
+            try_again = input('Wanna Try again ?\nYes or No: ').lower()
+            os.system(clear_command)
+
+            if try_again == 'no' or try_again == 'n':
+                print('You Did not Register\n')
+                return
+            print()
+
+
+def handle_login():
+    while True:
+        name = input('Enter Your Username: ')
+        password = getpass('Your Password: ')
+
+        signin_state = signin(username_=name, password_=password)
+
+        if signin_state[1] == 'SUCCESS':
+            os.system(clear_command)
+            print(f'Logged in Successfully.\nWelcome {name}.')
+            print()
+            return name
+
+        elif signin_state[1] == 'FAILED':
+            os.system(clear_command)
+            print('Login Failed\n- There Is not User with this Informations!\n')
+            name = None
+
+            try_again = input('Wanna Try again ?\nYes or No: ').lower()
+            os.system(clear_command)
+
+            if try_again == 'no' or try_again == 'n':
+                print('You Did not Login\n')
+                return
+            print()
+
+        else:
+            os.system(clear_command)
+            print(signin_state[1])
+            name = None
+            print()
+
+
+def play_again():
+    ask_for_playing = input('Wanna Play Now?\nYes or No: ').lower()
+    if ask_for_playing == 'no' or ask_for_playing == 'n':
+        exit()
+
+    else:
+        os.system(clear_command)
+        return
+            
 
 if sys.argv[1:]:
 
     match sys.argv[1]:
         
         case 'leaderboard':
-
             while True:
                 print(leaderboard())
                 print()
                 print()
+                play_again()
 
-                ask_for_playing = input('Wanna Play Now?\nYes or No: ').lower()
-                if ask_for_playing == 'no' or ask_for_playing == 'n':
-                    exit()
 
-                else:
-                    os.system(clear_command)
-                    break
-
-            
         case 'register':
-            while True:
-                name = input('Your Name: ')
-                password = getpass('Your Password: ')
-                confirm_password = getpass('Confirm Password: ')
-
-                result = register_bl(
-                    name=name,
-                    password=password,
-                    confirm_password=confirm_password
-                    )
-                
-                if result == 'SUCCESS':
-                    register(
-                        name=name,
-                        password=password
-                        )
-                    
-                    os.system(clear_command)
-
-                    print(f'Registered as {name} successfully.')
-                    print()
-                    break
-
-                else:
-                    os.system(clear_command)
-                    print(f'Registered Failed\n{result[1]}\n')
-
-                    try_again = input('Wanna Try again ?\nYes or No: ').lower()
-                    os.system(clear_command)
-
-                    if try_again == 'no' or try_again == 'n':
-                        print('You Did not Register\n')
-                        break
-                    print()
+            name = handle_register()
 
         case 'login':
             
-            while True:
-                name = input('Enter Your Username: ')
-                password = getpass('Your Password: ')
-
-                signin_state = signin(username_=name, password_=password)
-
-                if signin_state[1] == 'SUCCESS':
-                    os.system(clear_command)
-                    print(f'Logged in Successfully.\nWelcome {name}.')
-                    print()
-                    break
-
-                elif signin_state[1] == 'FAILED':
-                    os.system(clear_command)
-                    print('Login Failed\n- There Is not User with this Informations!\n')
-                    name = None
-
-                    try_again = input('Wanna Try again ?\nYes or No: ').lower()
-                    os.system(clear_command)
-
-                    if try_again == 'no' or try_again == 'n':
-                        print('You Did not Login\n')
-                        break
-                    print()
-
-                else:
-                    os.system(clear_command)
-                    print(signin_state[1])
-                    name = None
-                    print()
+            name = handle_login()
         
         case _:
             os.system(clear_command)
@@ -122,7 +142,7 @@ if sys.argv[1:]:
             print()
 
 
-def new_board() -> (list, str, float):
+def new_board() -> Tuple[list, str, float]:
 
     board = list()
 
@@ -153,14 +173,14 @@ def update_board(board: list, board_house: dict = None, player: str = None, move
             return f'{board}\n'
         
 
-        elif validate_spot(move) == True and board_house[move] in ['x', 'o']:
+        elif validate_spot(move) == True and board_house[move] in [PLAYER_X, PLAYER_O]:
 
             os.system(clear_command)
             print(''.join(board))
             print()
             move = input('- This spot is already filled!\nChoose another one: ')
 
-            if validate_spot(move) and board_house[move] not in ['x', 'o']:
+            if validate_spot(move) and board_house[move] not in [PLAYER_X, PLAYER_O]:
                 os.system(clear_command)
                 board.pop(board_house[move])
                 board.insert(board_house[move], player)
@@ -169,8 +189,7 @@ def update_board(board: list, board_house: dict = None, player: str = None, move
                 board = ''.join(board)
                 
                 return f'{board}\n'
-                
-     
+            
         else:
             os.system(clear_command)
             print(''.join(board))
@@ -184,12 +203,12 @@ def update_board(board: list, board_house: dict = None, player: str = None, move
 
 if __name__ == "__main__":
     
-    while True:
+    display_menu()
+    time.sleep(2)
+    os.system(clear_command)
 
-        game_mode = input('- Select Game Mode\n1- Pro\n2- Normal\n\nYour Choice(1-2): ')
-        os.system(clear_command)
-        print(f'Game Mode Set as {"Pro!" if game_mode == "1" else "Normal!"}!\n')
-        time.sleep(1)
+    while True:
+        game_mode = select_game_mode()
 
         for turn in range(1, 11):
 
@@ -214,16 +233,16 @@ if __name__ == "__main__":
             if check_for_winner(board_house):
                 game_time = int(time.time() - start_time)
 
-                if name and player == 'x':
+                if name and player == PLAYER_X:
                     print(f'++ {name} wins as "x" in {game_time} seconds!  ++')
                     print()
-                    save_records(player='x', game_duration=game_time, name=name)
+                    save_records(player=PLAYER_X, game_duration=game_time, name=name)
                     break
 
-                elif name and player == 'o':
+                elif name and player == PLAYER_O:
                     print('- You Lose!')
                     print()
-                    save_records(player='o', game_duration=game_time)
+                    save_records(player=PLAYER_O, game_duration=game_time)
                     break
 
 
@@ -241,10 +260,10 @@ if __name__ == "__main__":
             else:
 
                 if turn % 2 == 0:
-                    player = 'o'
+                    player = PLAYER_O
 
                 else:
-                    player = 'x'
+                    player = PLAYER_X
 
                 print()
                 
@@ -252,7 +271,7 @@ if __name__ == "__main__":
                     print('Choose Numbers Between 1-9')
 
                     
-                if player == 'x':
+                if player == PLAYER_X:
                     player_choice = input(f'{player.capitalize()} Turn: ')
                     print(update_board(board=empty_board[0], board_house=board_house, player=player, move=player_choice))
 
